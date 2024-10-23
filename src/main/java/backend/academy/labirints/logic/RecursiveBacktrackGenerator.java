@@ -14,7 +14,7 @@ public class RecursiveBacktrackGenerator extends Generator {
 
     @Override
     public Maze generate() {
-        var start = maze[0][0];
+        var start = maze[random.nextInt(width)][random.nextInt(height)];
         start.isVisited(true);
         stack.push(start);
         while (!stack.isEmpty()) {
@@ -31,18 +31,11 @@ public class RecursiveBacktrackGenerator extends Generator {
             }
         }
         createAdditionalPaths();
+        generateRandomCells();
         return Maze.builder()
             .maze(maze)
             .adjacentCells(adjacency)
             .build();
-    }
-
-    private void print() {
-        var entrys = adjacency.entrySet().stream()
-            .sorted(Comparator.comparing(k -> k.getKey().id())).toList();
-        for (var entry : entrys) {
-            System.out.println(entry.getKey() + ": " + entry.getValue());
-        }
     }
 
     public static void main(String[] args) {

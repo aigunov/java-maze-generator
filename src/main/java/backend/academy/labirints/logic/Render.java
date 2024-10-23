@@ -1,7 +1,7 @@
 package backend.academy.labirints.logic;
 
-public interface Render {
-//    String render(final Maze maze);
+import backend.academy.labirints.model.Maze;
 
-//    String render(final Maze maze, final List<Coordinates> path);
+public interface Render {
+    void render(final Maze maze);
 }

@@ -10,7 +10,6 @@ import java.util.Random;
 
 public class PrimGenerator extends Generator {
     private final List<Cell> frontier = new ArrayList<>();
-    private final Random random = new Random();
 
     public PrimGenerator(final int width, final int height) {
         super(width, height);
@@ -43,11 +42,8 @@ public class PrimGenerator extends Generator {
 
             frontier.removeIf(Cell::isVisited);
         }
-        System.out.println("До добавления доп путей");
-        print();
-        System.out.println("После добавления доп путей");
         createAdditionalPaths();
-        print();
+        generateRandomCells();
         return Maze.builder()
             .adjacentCells(adjacency)
             .walls(walls)
@@ -64,7 +60,8 @@ public class PrimGenerator extends Generator {
     }
 
     public static void main(String[] args) {
-        var generator = new PrimGenerator(5, 5);
+        var generator = new PrimGenerator(4, 4);
         generator.generate();
+        generator.print();
     }
 }

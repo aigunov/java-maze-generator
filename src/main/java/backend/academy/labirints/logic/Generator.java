@@ -11,6 +11,7 @@ import java.util.Random;
 
 public abstract class Generator {
     protected int width, height;
+    protected final Random random = new Random();
     protected final Cell[][] maze;
     protected final Map<Cell, List<Cell>> adjacency = new HashMap<>();
     protected final Map<Cell, List<Cell>> walls = new HashMap<>();
@@ -22,7 +23,7 @@ public abstract class Generator {
         int id = 1;
         for (int i = 0; i < maze.length; i++) {
             for (int j = 0; j < maze[0].length; j++) {
-                maze[i][j] = new Cell(id++, i, j, false);
+                maze[i][j] = new Cell(id++, i, j, Cell.CellType.NOTHING,false);
             }
         }
     }
@@ -49,6 +50,15 @@ public abstract class Generator {
         return neighbors;
     }
 
+    public void generateRandomCells() {
+
+        for (int i = 0; i < 5; i++) {
+            int x = random.nextInt(width);
+            int y = random.nextInt(height);
+            maze[x][y].type(random.nextBoolean() ? Cell.CellType.GOOD : Cell.CellType.BAD);
+        }
+    }
+
     protected void removeWall(final Cell cell, final Cell neighbour) {
         adjacency.computeIfAbsent(cell, k -> new ArrayList<>()).add(neighbour);
         adjacency.computeIfAbsent(neighbour, k -> new ArrayList<>()).add(cell);
@@ -62,7 +72,6 @@ public abstract class Generator {
 
     protected void createAdditionalPaths(){
         createWallsMap();
-        Random random = new Random();
 
         int numAdditionalPaths = random.nextInt(maze.length * maze[0].length / 4) + 1;
 

@@ -12,10 +12,18 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString(of = {"id"})
+@ToString(of = {"id", "type"})
 public class Cell {
     private int id;
     private int x;
     private int y;
+    private CellType type;
     private boolean isVisited;
+
+    public enum CellType{
+        GOOD,
+        BAD,
+        NOTHING
+    }
+
 }
