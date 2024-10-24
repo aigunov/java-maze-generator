@@ -35,6 +35,7 @@ public class RecursiveBacktrackGenerator extends Generator {
         return Maze.builder()
             .maze(maze)
             .adjacentCells(adjacency)
+            .walls(walls)
             .build();
     }
 
