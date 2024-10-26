@@ -20,10 +20,17 @@ public class Cell {
     private CellType type;
     private boolean isVisited;
 
+    @Getter()
     public enum CellType{
-        GOOD,
-        BAD,
-        NOTHING
+        GOOD(0),
+        BAD(4),
+        NOTHING(2);
+
+        private final int surfaceFactor;
+
+        CellType(int surfaceFactor) {
+            this.surfaceFactor = surfaceFactor;
+        }
     }
 
 }

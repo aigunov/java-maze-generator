@@ -6,8 +6,9 @@ import backend.academy.labirints.model.Point;
 import java.util.List;
 import java.util.Map;
 
-public abstract class Solver {
-
-    public abstract List<Cell> findShortestPath(Cell[][] cells, Map<Cell, List<Cell>> adjacency, Cell start, Cell finish);
-
+public class FordBellmanSolver extends Solver {
+    @Override
+    public List<Cell> findShortestPath(Cell[][] cells, Map<Cell, List<Cell>> adjacency, Cell start, Cell finish) {
+        return List.of();
+    }
 }

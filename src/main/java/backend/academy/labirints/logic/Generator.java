@@ -3,7 +3,6 @@ package backend.academy.labirints.logic;
 import backend.academy.labirints.model.Cell;
 import backend.academy.labirints.model.Maze;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +22,7 @@ public abstract class Generator {
         int id = 1;
         for (int i = 0; i < maze.length; i++) {
             for (int j = 0; j < maze[0].length; j++) {
-                maze[i][j] = new Cell(id++, i, j, Cell.CellType.NOTHING,false);
+                maze[i][j] = new Cell(id++, j, i, Cell.CellType.NOTHING,false);
             }
         }
     }
@@ -39,8 +38,8 @@ public abstract class Generator {
         };
 
         for (var direction : directions) {
-            var newRow = cell.x() + direction[0];
-            var newCol = cell.y() + direction[1];
+            var newRow = cell.y() + direction[1];
+            var newCol = cell.x() + direction[0];
 
             if (newRow >= 0 && newRow < maze.length && newCol >= 0 && newCol < maze[0].length) {
                 neighbors.add(maze[newRow][newCol]);
@@ -51,11 +50,11 @@ public abstract class Generator {
     }
 
     public void generateRandomCells() {
-
+        //TODO поменять генерацию: сделать больше поверхностей и разброс поменять
         for (int i = 0; i < 5; i++) {
             int x = random.nextInt(width);
             int y = random.nextInt(height);
-            maze[x][y].type(random.nextBoolean() ? Cell.CellType.GOOD : Cell.CellType.BAD);
+            maze[y][x].type(random.nextBoolean() ? Cell.CellType.GOOD : Cell.CellType.BAD);
         }
     }
 
@@ -70,6 +69,7 @@ public abstract class Generator {
             .toList();
     }
 
+    //TODO поменять генерацию доп-путей: отделять стенки от граничных стенок
     protected void createAdditionalPaths(){
         createWallsMap();
 

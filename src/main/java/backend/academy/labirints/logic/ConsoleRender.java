@@ -59,8 +59,8 @@ public class ConsoleRender implements Render{
             }
         }
 
-        grid[(start.x() - 1) * 2 + 1][(start.y() - 1) * 2 + 1] = START;
-        grid[(finish.x() - 1) * 2 + 1][(finish.y() - 1) * 2 + 1] = FINISH;
+        grid[(start.y() - 1) * 2 + 1][(start.x() - 1) * 2 + 1] = START;
+        grid[(finish.y() - 1) * 2 + 1][(finish.x() - 1) * 2 + 1] = FINISH;
 
         draw();
     }

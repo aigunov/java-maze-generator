@@ -66,7 +66,7 @@ public class UserInterface {
             System.out.print("\nСтарт, номер ряда: ");
             int start_row = sc.nextInt();
             if (checkValidationCoordinates(start_column, start_row)) {
-                params.start(new Point(start_row, start_column));
+                params.start(new Point(start_column, start_row));
                 break;
             }
         }
@@ -77,7 +77,7 @@ public class UserInterface {
             System.out.print("\nФиниш, номер ряда: ");
             var finish_row = sc.nextInt();
             if (checkValidationCoordinates(finish_column, finish_row)) {
-                params.finish(new Point(finish_row, finish_column));
+                params.finish(new Point(finish_column, finish_row));
                 break;
             }
         }
@@ -87,7 +87,7 @@ public class UserInterface {
     private boolean checkValidationCoordinates(int finish_column, int finish_row) {
         if (finish_column > 0 && finish_column <= params.width() &&
             finish_row > 0 && finish_row <= params.height()) {
-            System.out.printf("Введенные данные валидны. Точка финиша: (%d;%d)%n", finish_column,finish_row);
+            System.out.printf("Введенные данные валидны. Точка: (%d;%d)%n", finish_column,finish_row);
             return true;
         }else {
             System.out.println("Введенные данные невалидны.");
