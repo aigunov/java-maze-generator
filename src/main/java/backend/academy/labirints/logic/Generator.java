@@ -1,6 +1,7 @@
 package backend.academy.labirints.logic;
 
 import backend.academy.labirints.model.Cell;
+import backend.academy.labirints.model.GenerateParameters;
 import backend.academy.labirints.model.Maze;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -51,7 +52,7 @@ public abstract class Generator {
 
     public void generateRandomCells() {
         //TODO поменять генерацию: сделать больше поверхностей и разброс поменять
-        for (int i = 0; i < 15; i++) {
+        for (int i = 0; i < 1; i++) {
             int x = random.nextInt(width);
             int y = random.nextInt(height);
             maze[y][x].type(random.nextInt(2) == 0 ? Cell.CellType.GOOD : Cell.CellType.BAD);
@@ -122,5 +123,5 @@ public abstract class Generator {
             }
         }
     }
-    public abstract Maze generate();
+    public abstract Maze generate(final GenerateParameters params);
 }

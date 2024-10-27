@@ -9,9 +9,11 @@ import java.util.Map;
 
 @Getter
 @Setter
-@Builder
+@Builder(toBuilder = true)
 public class Maze {
     private Cell[][] maze;
+    private List<Cell> path;
     private Map<Cell, List<Cell>> adjacentCells;
     private Map<Cell, List<Cell>> walls;
+    private final Cell start, finish;
 }

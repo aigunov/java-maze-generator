@@ -5,11 +5,12 @@ import backend.academy.labirints.model.GenerateParameters;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class UserInterface {
-    private final Scanner sc = new Scanner(System.in);
-    private final GenerateParameters params = new GenerateParameters();
+public class UserCommunicator {
+    private static final Scanner sc = new Scanner(System.in);
+    private static final GenerateParameters params = new GenerateParameters();
+    private UserCommunicator() {}
 
-    public GenerateParameters communicate() {
+    public static GenerateParameters communicate() {
         while (true) {
             System.out.println("Введите пожалуйста ширину и длину вашего лабиринта в перечисленном порядке: ");
             try {
@@ -84,7 +85,7 @@ public class UserInterface {
         return params;
     }
 
-    private boolean checkValidationCoordinates(int column, int row) {
+    private static boolean checkValidationCoordinates(int column, int row) {
         if (column > 0 && column <= params.width() &&
             row > 0 && row <= params.height()) {
             System.out.printf("Введенные данные валидны. Точка: (%d;%d)%n", column,row);

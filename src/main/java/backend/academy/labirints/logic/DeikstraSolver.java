@@ -1,6 +1,7 @@
 package backend.academy.labirints.logic;
 
 import backend.academy.labirints.model.Cell;
+import backend.academy.labirints.model.Maze;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -13,8 +14,13 @@ public class DeikstraSolver extends Solver {
     private static final int INF = Integer.MAX_VALUE;
 
     @Override
-    public List<Cell> findShortestPath(Cell[][] cells, Map<Cell, List<Cell>> adjacency, Cell start, Cell finish) {
+    public List<Cell> findShortestPath(final Maze maze) {
+        var cells = maze.maze();
+        var adjacency = maze.adjacentCells();
+        var start = maze.start();
+        var finish = maze.finish();
         Map<Cell, Integer> distances = new HashMap<>();
+
         for (int i = 0; i < cells.length; i++) {
             for (int j = 0; j < cells[0].length; j++) {
                 distances.put(cells[i][j], INF);
@@ -48,7 +54,7 @@ public class DeikstraSolver extends Solver {
         return null;
     }
 
-    private static List<Cell> reconstructPath(Map<Cell, Cell> predecessors, Cell finish) {
+    private List<Cell> reconstructPath(Map<Cell, Cell> predecessors, Cell finish) {
         List<Cell> path = new ArrayList<>();
         Cell current = finish;
 
@@ -60,30 +66,4 @@ public class DeikstraSolver extends Solver {
         Collections.reverse(path);
         return path;
     }
-
-//    public static void main(String[] args) {
-//        // Пример использования
-//        Cell[][] cells = new Cell[5][5];
-//        for (int i = 0; i < cells.length; i++) {
-//            for (int j = 0; j < cells[0].length; j++) {
-//                cells[i][j] = new Cell(i, j);
-//            }
-//        }
-//
-//        Map<Cell, List<Cell>> adjacency = new HashMap<>();
-//        // ... (инициализация adjacency, например, из вашей матрицы лабиринта)
-//
-//        Cell start = cells[0][1]; // (0, 1)
-//        Cell finish = cells[3][3]; // (3, 3)
-//
-//        List<Cell> shortestPath = findShortestPath(cells, adjacency, start, finish);
-//        if (shortestPath != null) {
-//            System.out.println("Кратчайший путь:");
-//            for (Cell cell : shortestPath) {
-//                System.out.println("(" + cell.x + ", " + cell.y + ")");
-//            }
-//        } else {
-//            System.out.println("Путь не найден");
-//        }
-//    }
 }

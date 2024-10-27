@@ -3,10 +3,11 @@ package backend.academy.labirints.logic;
 import backend.academy.labirints.model.Cell;
 import backend.academy.labirints.model.Maze;
 import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+
 
 public class ConsoleRender implements Render{
+    private static Render instance;
+
     private final static String PASSAGE = "⬜️";
     private final static String WALL = "⬛";
     private final static String BAD = "⛔";
@@ -15,21 +16,18 @@ public class ConsoleRender implements Render{
     private final static String FINISH = "🛑";
     private final static String PATH = "🟪";
 
-    private int width, height;
-    private Cell[][] labyrinth;
-    private Map<Cell, List<Cell>> adjacentCells;
-    private String[][] grid;
+    private final String[][] grid;
 
-    @Override
-    public void renderLabyrinth(final Maze maze, final Cell.Coordinates start, final Cell.Coordinates finish) {
-        labyrinth = maze.maze();
-        adjacentCells = maze.adjacentCells();
-        width = maze.maze()[0].length;
-        height = maze.maze().length;
-        grid = new String[height * 2 + 1][width * 2 + 1];
+    public static Render getInstance(int height, int width) {
+        if (instance == null) {
+            instance = new ConsoleRender(height, width);
+        }
+        return instance;
+    }
 
-        Arrays.fill(grid[0], WALL);
-        Arrays.fill(grid[height * 2], WALL);
+    public ConsoleRender(int height, int width) {
+        this.grid = new String[height * 2 + 1][width * 2 + 1];
+        Arrays.stream(grid).forEach(row -> Arrays.fill(row, WALL));
 
         for (int i = 1; i < height * 2; i++) {
             Arrays.fill(grid[i], PASSAGE);
@@ -39,6 +37,11 @@ public class ConsoleRender implements Render{
             grid[i][0] = WALL;
             grid[i][width * 2] = WALL;
         }
+    }
+
+    @Override
+    public Render renderLabyrinth(final Maze maze) {
+        var labyrinth = maze.maze();
 
         for (int i = 0; i < maze.maze().length; i++) {
             for (int j = 0; j < maze.maze()[0].length; j++) {
@@ -62,24 +65,24 @@ public class ConsoleRender implements Render{
             }
         }
 
-        grid[start.y() * 2 + 1][start.x() * 2 + 1] = START;
-        grid[finish.y() * 2 + 1][finish.x() * 2 + 1] = FINISH;
+        grid[maze.start().y() * 2 + 1][maze.start().x() * 2 + 1] = START;
+        grid[maze.finish().y() * 2 + 1][maze.finish().x() * 2 + 1] = FINISH;
 
-        draw();
+        return instance;
     }
 
     @Override
-    public void renderPathInLabyrinth(List<Cell> path) {
-        for (int i = 0; i < path.size() - 1; i++) {
-            var cell = path.get(i);
+    public Render renderPath(final Maze maze) {
+        System.out.println("ПУТЬ: ");
+        for (int i = 0; i < maze.path().size() - 1; i++) {
+            var cell = maze.path().get(i);
+            var nextCell = maze.path().get(i + 1);
             var grid_row = cell.coordinates().calculateGridY();
             var grid_col = cell.coordinates().calculateGridX();
-            if (!grid[grid_row][grid_col].equals(START)) {
+            if (!grid[grid_row][grid_col].equals(START) && !grid[grid_row][grid_col].equals(FINISH)) {
                 grid[grid_row][grid_col] = PATH;
-            }else if (grid[grid_row][grid_col].equals(FINISH)){
-                continue;
             }
-            var nextCell = path.get(i + 1);
+            //TODO хуйня, переделай по новой, чоза проверка на 1 2 3 4
             switch (cell.coordinates().getRelativePosition(nextCell.coordinates())) {
                 case 1 -> grid[grid_row - 1][grid_col] = PATH;
                 case 2 -> grid[grid_row][grid_col + 1] = PATH;
@@ -87,14 +90,14 @@ public class ConsoleRender implements Render{
                 case 4 -> grid[grid_row][grid_col - 1] = PATH;
             }
         }
-        draw();
+        return instance;
     }
 
     @Override
     public void draw() {
-        for (int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid[i].length; j++) {
-                System.out.print(grid[i][j] + "\t");
+        for (String[] strings : grid) {
+            for (String string : strings) {
+                System.out.print(string + "\t");
             }
             System.out.println();
         }

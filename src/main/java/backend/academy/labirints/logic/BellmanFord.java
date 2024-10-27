@@ -1,13 +1,18 @@
 package backend.academy.labirints.logic;
 
 import backend.academy.labirints.model.Cell;
+import backend.academy.labirints.model.Maze;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class BellmanFord  extends Solver {
     @Override
-    public List<Cell> findShortestPath(Cell[][] cells, Map<Cell, List<Cell>> adjacency, Cell start, Cell finish) {
+    public List<Cell> findShortestPath(final Maze maze) {
+        var cells = maze.maze();
+        var adjacency = maze.adjacentCells();
+        var start = maze.finish();
+        var finish = maze.finish();
         int countVertex = cells.length * cells[0].length;
         int[] dist = new int[countVertex];
         Cell[] prev = new Cell[countVertex];

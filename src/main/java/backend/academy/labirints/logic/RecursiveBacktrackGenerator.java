@@ -1,8 +1,8 @@
 package backend.academy.labirints.logic;
 
 import backend.academy.labirints.model.Cell;
+import backend.academy.labirints.model.GenerateParameters;
 import backend.academy.labirints.model.Maze;
-import java.util.Comparator;
 import java.util.Stack;
 
 public class RecursiveBacktrackGenerator extends Generator {
@@ -13,7 +13,7 @@ public class RecursiveBacktrackGenerator extends Generator {
     }
 
     @Override
-    public Maze generate() {
+    public Maze generate(final GenerateParameters params) {
         var start = maze[random.nextInt(height)][random.nextInt(width)];
         start.isVisited(true);
         stack.push(start);
@@ -36,6 +36,8 @@ public class RecursiveBacktrackGenerator extends Generator {
             .maze(maze)
             .adjacentCells(adjacency)
             .walls(walls)
+            .start(maze[params.start().y()][params.start().x()])
+            .finish(maze[params.finish().y()][params.finish().x()])
             .build();
     }
 

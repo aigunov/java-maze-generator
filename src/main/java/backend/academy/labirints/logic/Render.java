@@ -5,9 +5,9 @@ import backend.academy.labirints.model.Maze;
 import java.util.List;
 
 public interface Render {
-    void renderLabyrinth(final Maze maze, final Cell.Coordinates start, final Cell.Coordinates finish);
+    Render renderLabyrinth(final Maze maze);
 
-    void renderPathInLabyrinth(final List<Cell> path);
+    Render renderPath(final Maze maze);
 
     void draw();
 
