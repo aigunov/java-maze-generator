@@ -9,7 +9,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class GenerateParameters {
     private int width, height;
-    private Point start, finish;
+    private Cell.Coordinates start, finish;
     private GenerateType generateType;
     private SolverType solverType;
 

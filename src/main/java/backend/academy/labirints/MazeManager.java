@@ -28,8 +28,8 @@ public class MazeManager {
         };
         var maze = generator.generate();
         render.renderLabyrinth(maze, params.start(), params.finish());
-        var start = maze.maze()[params.start().y() - 1][params.start().x()-1];
-        var finish = maze.maze()[params.finish().y()-1][params.finish().x()-1];
+        var start = maze.maze()[params.start().y()][params.start().x()];
+        var finish = maze.maze()[params.finish().y()][params.finish().x()];
         var path = solver.findShortestPath(maze.maze(), maze.adjacentCells(), start, finish);
         System.out.println("ПУТЬ: ");
         render.renderPathInLabyrinth(path);

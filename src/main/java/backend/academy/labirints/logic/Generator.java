@@ -22,7 +22,7 @@ public abstract class Generator {
         int id = 1;
         for (int i = 0; i < maze.length; i++) {
             for (int j = 0; j < maze[0].length; j++) {
-                maze[i][j] = new Cell(id++, j, i, Cell.CellType.NOTHING,false);
+                maze[i][j] = new Cell(id++, new Cell.Coordinates(j, i), Cell.CellType.NOTHING,false);
             }
         }
     }

@@ -14,7 +14,7 @@ public class RecursiveBacktrackGenerator extends Generator {
 
     @Override
     public Maze generate() {
-        var start = maze[random.nextInt(width)][random.nextInt(height)];
+        var start = maze[random.nextInt(height)][random.nextInt(width)];
         start.isVisited(true);
         stack.push(start);
         while (!stack.isEmpty()) {
@@ -39,9 +39,4 @@ public class RecursiveBacktrackGenerator extends Generator {
             .build();
     }
 
-    public static void main(String[] args) {
-        var generator = new RecursiveBacktrackGenerator(3, 3);
-        generator.generate();
-
-    }
 }

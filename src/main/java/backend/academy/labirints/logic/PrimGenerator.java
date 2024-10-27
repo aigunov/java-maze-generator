@@ -17,7 +17,7 @@ public class PrimGenerator extends Generator {
 
     @Override
     public Maze generate() {
-        var current = maze[random.nextInt(width)][random.nextInt(height)];
+        var current = maze[random.nextInt(height)][random.nextInt(width)];
         current.isVisited(true);
 
         var neighsToFrontier = getUnvisitedNeighbors(current);

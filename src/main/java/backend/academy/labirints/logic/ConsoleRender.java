@@ -2,7 +2,6 @@ package backend.academy.labirints.logic;
 
 import backend.academy.labirints.model.Cell;
 import backend.academy.labirints.model.Maze;
-import backend.academy.labirints.model.Point;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +21,7 @@ public class ConsoleRender implements Render{
     private String[][] grid;
 
     @Override
-    public void renderLabyrinth(final Maze maze, final Point start, final Point finish) {
+    public void renderLabyrinth(final Maze maze, final Cell.Coordinates start, final Cell.Coordinates finish) {
         labyrinth = maze.maze();
         adjacentCells = maze.adjacentCells();
         width = maze.maze()[0].length;
@@ -43,9 +42,9 @@ public class ConsoleRender implements Render{
 
         for (int i = 0; i < maze.maze().length; i++) {
             for (int j = 0; j < maze.maze()[0].length; j++) {
-                var grid_row = i * 2 + 1;
-                var grid_col = j * 2 + 1;
                 var cell = labyrinth[i][j];
+                var grid_row = cell.coordinates().calculateGridY();
+                var grid_col = cell.coordinates().calculateGridX();
                 grid[grid_row][grid_col] = switch (cell.type()){
                     case Cell.CellType.GOOD -> GOOD;
                     case Cell.CellType.BAD -> BAD;
@@ -63,8 +62,8 @@ public class ConsoleRender implements Render{
             }
         }
 
-        grid[(start.y() - 1) * 2 + 1][(start.x() - 1) * 2 + 1] = START;
-        grid[(finish.y() - 1) * 2 + 1][(finish.x() - 1) * 2 + 1] = FINISH;
+        grid[start.y() * 2 + 1][start.x() * 2 + 1] = START;
+        grid[finish.y() * 2 + 1][finish.x() * 2 + 1] = FINISH;
 
         draw();
     }
@@ -73,13 +72,15 @@ public class ConsoleRender implements Render{
     public void renderPathInLabyrinth(List<Cell> path) {
         for (int i = 0; i < path.size() - 1; i++) {
             var cell = path.get(i);
-            var grid_row = cell.y() * 2 + 1;
-            var grid_col = cell.x() * 2 + 1;
+            var grid_row = cell.coordinates().calculateGridY();
+            var grid_col = cell.coordinates().calculateGridX();
             if (!grid[grid_row][grid_col].equals(START)) {
                 grid[grid_row][grid_col] = PATH;
+            }else if (grid[grid_row][grid_col].equals(FINISH)){
+                continue;
             }
             var nextCell = path.get(i + 1);
-            switch (cell.getRelativePosition(nextCell)) {
+            switch (cell.coordinates().getRelativePosition(nextCell.coordinates())) {
                 case 1 -> grid[grid_row - 1][grid_col] = PATH;
                 case 2 -> grid[grid_row][grid_col + 1] = PATH;
                 case 3 -> grid[grid_row + 1][grid_col] = PATH;
