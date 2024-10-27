@@ -4,6 +4,8 @@ import backend.academy.labirints.model.Cell;
 import backend.academy.labirints.model.Maze;
 import backend.academy.labirints.model.Point;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 public class ConsoleRender implements Render{
     private final static String PASSAGE = "⬜️";
@@ -12,15 +14,17 @@ public class ConsoleRender implements Render{
     private final static String GOOD = "✅";
     private final static String START = "🟢";
     private final static String FINISH = "🛑";
+    private final static String PATH = "🟪";
 
     private int width, height;
     private Cell[][] labyrinth;
-
+    private Map<Cell, List<Cell>> adjacentCells;
     private String[][] grid;
 
     @Override
-    public void render(final Maze maze, final Point start, final Point finish) {
+    public void renderLabyrinth(final Maze maze, final Point start, final Point finish) {
         labyrinth = maze.maze();
+        adjacentCells = maze.adjacentCells();
         width = maze.maze()[0].length;
         height = maze.maze().length;
         grid = new String[height * 2 + 1][width * 2 + 1];
@@ -62,6 +66,26 @@ public class ConsoleRender implements Render{
         grid[(start.y() - 1) * 2 + 1][(start.x() - 1) * 2 + 1] = START;
         grid[(finish.y() - 1) * 2 + 1][(finish.x() - 1) * 2 + 1] = FINISH;
 
+        draw();
+    }
+
+    @Override
+    public void renderPathInLabyrinth(List<Cell> path) {
+        for (int i = 0; i < path.size() - 1; i++) {
+            var cell = path.get(i);
+            var grid_row = cell.y() * 2 + 1;
+            var grid_col = cell.x() * 2 + 1;
+            if (!grid[grid_row][grid_col].equals(START)) {
+                grid[grid_row][grid_col] = PATH;
+            }
+            var nextCell = path.get(i + 1);
+            switch (cell.getRelativePosition(nextCell)) {
+                case 1 -> grid[grid_row - 1][grid_col] = PATH;
+                case 2 -> grid[grid_row][grid_col + 1] = PATH;
+                case 3 -> grid[grid_row + 1][grid_col] = PATH;
+                case 4 -> grid[grid_row][grid_col - 1] = PATH;
+            }
+        }
         draw();
     }
 

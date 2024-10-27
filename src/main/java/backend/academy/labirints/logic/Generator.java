@@ -51,10 +51,10 @@ public abstract class Generator {
 
     public void generateRandomCells() {
         //TODO поменять генерацию: сделать больше поверхностей и разброс поменять
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 15; i++) {
             int x = random.nextInt(width);
             int y = random.nextInt(height);
-            maze[y][x].type(random.nextBoolean() ? Cell.CellType.GOOD : Cell.CellType.BAD);
+            maze[y][x].type(random.nextInt(2) == 0 ? Cell.CellType.GOOD : Cell.CellType.BAD);
         }
     }
 

@@ -20,6 +20,18 @@ public class Cell {
     private CellType type;
     private boolean isVisited;
 
+    public int getRelativePosition(final Cell nextCell) {
+        if (nextCell.x == x && nextCell.y == y + 1) {
+            return 3; // снизу
+        } else if (nextCell.x == x && nextCell.y == y - 1) {
+            return 1; // сверху
+        } else if (nextCell.x == x + 1 && nextCell.y == y) {
+            return 2; // справа
+        } else {
+            return 4; // снизу
+        }
+    }
+
     @Getter()
     public enum CellType{
         GOOD(0),

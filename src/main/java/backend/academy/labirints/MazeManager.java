@@ -27,10 +27,12 @@ public class MazeManager {
             case FORDBELLMAN -> new FordBellmanSolver();
         };
         var maze = generator.generate();
-        render.render(maze, params.start(), params.finish());
+        render.renderLabyrinth(maze, params.start(), params.finish());
         var start = maze.maze()[params.start().y() - 1][params.start().x()-1];
         var finish = maze.maze()[params.finish().y()-1][params.finish().x()-1];
-        solver.findShortestPath(maze.maze(), maze.adjacentCells(), start, finish).forEach(System.out::println);
+        var path = solver.findShortestPath(maze.maze(), maze.adjacentCells(), start, finish);
+        System.out.println("ПУТЬ: ");
+        render.renderPathInLabyrinth(path);
     }
 
     public static void main(String[] args) {
