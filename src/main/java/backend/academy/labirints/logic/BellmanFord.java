@@ -17,7 +17,7 @@ public class BellmanFord  extends Solver {
             dist[i] = Integer.MAX_VALUE;
             prev[i] = null;
         }
-        dist[getIndex(start, cells.length)] = 0; // Начальная точка
+        dist[getIndex(start, cells.length)] = 0;
 
         for (int k = 0; k < countVertex - 1; k++) {
             for (Cell u : adjacency.keySet()) {

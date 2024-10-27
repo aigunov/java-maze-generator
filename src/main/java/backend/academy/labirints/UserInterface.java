@@ -11,7 +11,7 @@ public class UserInterface {
 
     public GenerateParameters communicate() {
         while (true) {
-            System.out.println("Введите пожалуйста ширину и длину вашего лабиринта: ");
+            System.out.println("Введите пожалуйста ширину и длину вашего лабиринта в перечисленном порядке: ");
             try {
                 var width = sc.nextInt();
                 var height = sc.nextInt();

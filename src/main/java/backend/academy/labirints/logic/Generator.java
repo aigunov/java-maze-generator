@@ -18,7 +18,7 @@ public abstract class Generator {
     protected Generator(final int width, final int height) {
         this.width = width;
         this.height = height;
-        this.maze = new Cell[width][height];
+        this.maze = new Cell[height][width];
         int id = 1;
         for (int i = 0; i < maze.length; i++) {
             for (int j = 0; j < maze[0].length; j++) {
