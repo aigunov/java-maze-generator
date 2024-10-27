@@ -1,8 +1,8 @@
 package backend.academy.labirints;
 
+import backend.academy.labirints.logic.BellmanFord;
 import backend.academy.labirints.logic.ConsoleRender;
 import backend.academy.labirints.logic.DeikstraSolver;
-import backend.academy.labirints.logic.FordBellmanSolver;
 import backend.academy.labirints.logic.Generator;
 import backend.academy.labirints.logic.PrimGenerator;
 import backend.academy.labirints.logic.RecursiveBacktrackGenerator;
@@ -24,7 +24,7 @@ public class MazeManager {
         };
         solver = switch (params.solverType()) {
             case DEIKSTRA -> new DeikstraSolver();
-            case FORDBELLMAN -> new FordBellmanSolver();
+            case FORDBELLMAN -> new BellmanFord();
         };
         var maze = generator.generate();
         render.renderLabyrinth(maze, params.start(), params.finish());
