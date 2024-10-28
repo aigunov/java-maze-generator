@@ -2,10 +2,12 @@ package backend.academy.labirints.logic;
 
 import backend.academy.labirints.model.Cell;
 import backend.academy.labirints.model.Maze;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Arrays;
 import lombok.Getter;
 
 @SuppressWarnings({"RegexpSinglelineJava", "MagicNumber"})
+@SuppressFBWarnings({"CLI_CONSTANT_LIST_INDEX", "LSC_LITERAL_STRING_COMPARISON"})
 @Getter
 public class ConsoleRender implements Render {
     private final static String PASSAGE = "⬜️";

@@ -3,33 +3,35 @@ package backend.academy.labirints.logic;
 import backend.academy.labirints.model.Cell;
 import backend.academy.labirints.model.GenerateParameters;
 import backend.academy.labirints.model.Maze;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
+@SuppressFBWarnings({"PREDICTABLE_RANDOM"})
 public class RecursiveBacktrackGenerator extends Generator {
-    private final Deque<Cell> deque;
+    private final Deque<Cell> tracker;
 
     public RecursiveBacktrackGenerator(final int width, final int height) {
         super(width, height);
-        deque = new ArrayDeque<>();
+        tracker = new ArrayDeque<>();
     }
 
     @Override
     public Maze generate(final GenerateParameters params) {
         var start = maze[random.nextInt(height)][random.nextInt(width)];
         start.isVisited(true);
-        deque.push(start);
-        while (!deque.isEmpty()) {
-            var cell = deque.peek();
+        tracker.push(start);
+        while (!tracker.isEmpty()) {
+            var cell = tracker.peek();
             var neighbors = getUnvisitedNeighbors(cell);
 
             if (!neighbors.isEmpty()) {
                 var neighbour = neighbors.get((int) (Math.random() * neighbors.size()));
                 removeWall(cell, neighbour);
                 neighbour.isVisited(true);
-                deque.push(neighbour);
+                tracker.push(neighbour);
             } else {
-                deque.pop();
+                tracker.pop();
             }
         }
         createAdditionalPaths();

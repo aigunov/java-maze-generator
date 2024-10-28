@@ -24,13 +24,16 @@ public class BellmanFord extends Solver {
         dist[getIndex(start, cells.length)] = 0;
 
         for (int k = 0; k < countVertex - 1; k++) {
-            for (Cell u : adjacency.keySet()) {
-                for (Cell v : adjacency.get(u)) {
-                    int uIndex = getIndex(u, cells.length);
-                    int vIndex = getIndex(v, cells.length);
-                    if (dist[uIndex] != Integer.MAX_VALUE && dist[uIndex] + u.type().surfaceFactor() < dist[vIndex]) {
-                        dist[vIndex] = dist[uIndex] + u.type().surfaceFactor();
-                        prev[vIndex] = u;
+            for (var entry : adjacency.entrySet()) {
+                Cell u = entry.getKey();
+                int uIndex = getIndex(u, cells.length);
+                if (dist[uIndex] != Integer.MAX_VALUE) {
+                    for (Cell v : entry.getValue()) {
+                        int vIndex = getIndex(v, cells.length);
+                        if (dist[uIndex] + u.type().surfaceFactor() < dist[vIndex]) {
+                            dist[vIndex] = dist[uIndex] + u.type().surfaceFactor();
+                            prev[vIndex] = u;
+                        }
                     }
                 }
             }

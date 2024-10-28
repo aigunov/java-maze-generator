@@ -2,6 +2,7 @@ package backend.academy.labirints.logic;
 
 import backend.academy.labirints.model.Cell;
 import backend.academy.labirints.model.Maze;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
 
+@SuppressFBWarnings({"CLI_CONSTANT_LIST_INDEX"})
 public class DeikstraSolver extends Solver {
     private static final int INF = Integer.MAX_VALUE;
 

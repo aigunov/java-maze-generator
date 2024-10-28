@@ -2,11 +2,13 @@ package backend.academy.labirints;
 
 import backend.academy.labirints.model.Cell;
 import backend.academy.labirints.model.GenerateParameters;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 @SuppressWarnings({"RegexpSinglelineJava", "MagicNumber", "CatchParameterName", "MultipleStringLiterals",
     "IllegalIdentifierName"})
+@SuppressFBWarnings({"DM_DEFAULT_ENCODING"})
 public class UserCommunicator {
     private static final Scanner SC = new Scanner(System.in);
     private static final GenerateParameters PARAMETERS = new GenerateParameters();

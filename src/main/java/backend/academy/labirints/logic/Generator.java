@@ -3,6 +3,7 @@ package backend.academy.labirints.logic;
 import backend.academy.labirints.model.Cell;
 import backend.academy.labirints.model.GenerateParameters;
 import backend.academy.labirints.model.Maze;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.stream.Collectors;
 
+@SuppressFBWarnings({"CLI_CONSTANT_LIST_INDEX", "PREDICTABLE_RANDOM"})
 @SuppressWarnings({"MagicNumber"})
 public abstract class Generator {
     protected final Random random = new Random();
