@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 @SuppressFBWarnings({"CLI_CONSTANT_LIST_INDEX", "PREDICTABLE_RANDOM"})
 @SuppressWarnings({"MagicNumber"})
@@ -28,9 +27,16 @@ public abstract class Generator {
         int id = 1;
         for (int i = 0; i < maze.length; i++) {
             for (int j = 0; j < maze[0].length; j++) {
-                maze[i][j] = new Cell(id++, new Cell.Coordinates(j, i), Cell.CellType.NOTHING, false);
+                var cell = Cell.builder()
+                    .id(id++)
+                    .coordinates(new Cell.Coordinates(j, i))
+                    .type(Cell.CellType.NOTHING)
+                    .isVisited(false)
+                    .build();
+                maze[i][j] = cell;
             }
         }
+        createWallsMap();
     }
 
     protected List<Cell> getAllNeighbors(final Cell cell) {
@@ -55,9 +61,15 @@ public abstract class Generator {
         return neighbors;
     }
 
+    protected List<Cell> getUnvisitedNeighbors(final Cell cell) {
+        return getAllNeighbors(cell).stream()
+            .filter(c -> !c.isVisited())
+            .toList();
+    }
+
     public void generateRandomCells() {
         //TODO поменять генерацию: сделать больше поверхностей и разброс поменять
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < 5; i++) {
             int x = random.nextInt(width);
             int y = random.nextInt(height);
             maze[y][x].type(random.nextInt(2) == 0 ? Cell.CellType.GOOD : Cell.CellType.BAD);
@@ -65,32 +77,24 @@ public abstract class Generator {
     }
 
     /**
-     * Метода добавляющий связь(проход) между клетками соседями cell, neighbour
+     * Метода добавляющий связь(проход) в adjacency и удаляет стенки в walls между клетками соседями cell, neighbour
      */
     protected void removeWall(final Cell cell, final Cell neighbour) {
         adjacency.computeIfAbsent(cell, _ -> new ArrayList<>()).add(neighbour);
         adjacency.computeIfAbsent(neighbour, _ -> new ArrayList<>()).add(cell);
-        walls.getOrDefault(cell, new ArrayList<>()).add(neighbour);
+        walls.getOrDefault(cell, new ArrayList<>()).remove(neighbour);
         walls.getOrDefault(neighbour, new ArrayList<>()).remove(cell);
-    }
-
-    protected List<Cell> getUnvisitedNeighbors(final Cell cell) {
-        return getAllNeighbors(cell).stream()
-            .filter(c -> !c.isVisited())
-            .toList();
     }
 
     //TODO поменять генерацию доп-путей: отделять стенки от граничных стенок
     protected void createAdditionalPaths() {
-        createWallsMap();
-
         int numAdditionalPaths = random.nextInt(maze.length * maze[0].length / 4) + 1;
 
         for (int i = 0; i < numAdditionalPaths; i++) {
             int row = random.nextInt(maze.length);
             int col = random.nextInt(maze[0].length);
-            Cell cell = maze[row][col];
-            List<Cell> wallCells = walls.get(cell);
+            var cell = maze[row][col];
+            var wallCells = walls.get(cell);
 
             if (!wallCells.isEmpty()) {
                 var wallIndex = random.nextInt(wallCells.size());
@@ -103,10 +107,7 @@ public abstract class Generator {
         for (int row = 0; row < maze.length; row++) {
             for (int col = 0; col < maze[row].length; col++) {
                 var currentCell = maze[row][col];
-                List<Cell> neighbors = adjacency.get(currentCell);
-                List<Cell> wallCells = getAllNeighbors(currentCell).stream()
-                    .filter(neighborCell -> !neighbors.contains(neighborCell))
-                    .collect(Collectors.toCollection(ArrayList::new));
+                var wallCells = new ArrayList<>(getAllNeighbors(currentCell));
                 walls.put(currentCell, wallCells);
             }
         }
