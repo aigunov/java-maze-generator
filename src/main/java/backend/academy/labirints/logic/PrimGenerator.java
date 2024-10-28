@@ -5,9 +5,7 @@ import backend.academy.labirints.model.GenerateParameters;
 import backend.academy.labirints.model.Maze;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Random;
 
 public class PrimGenerator extends Generator {
     private final List<Cell> frontier = new ArrayList<>();

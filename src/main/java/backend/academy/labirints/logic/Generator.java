@@ -8,13 +8,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.stream.Collectors;
 
+@SuppressWarnings({"MagicNumber"})
 public abstract class Generator {
-    protected int width, height;
     protected final Random random = new Random();
     protected final Cell[][] maze;
     protected final Map<Cell, List<Cell>> adjacency = new HashMap<>();
     protected final Map<Cell, List<Cell>> walls = new HashMap<>();
+    protected int width;
+    protected int height;
 
     protected Generator(final int width, final int height) {
         this.width = width;
@@ -23,7 +26,7 @@ public abstract class Generator {
         int id = 1;
         for (int i = 0; i < maze.length; i++) {
             for (int j = 0; j < maze[0].length; j++) {
-                maze[i][j] = new Cell(id++, new Cell.Coordinates(j, i), Cell.CellType.NOTHING,false);
+                maze[i][j] = new Cell(id++, new Cell.Coordinates(j, i), Cell.CellType.NOTHING, false);
             }
         }
     }
@@ -71,7 +74,7 @@ public abstract class Generator {
     }
 
     //TODO поменять генерацию доп-путей: отделять стенки от граничных стенок
-    protected void createAdditionalPaths(){
+    protected void createAdditionalPaths() {
         createWallsMap();
 
         int numAdditionalPaths = random.nextInt(maze.length * maze[0].length / 4) + 1;
@@ -96,32 +99,15 @@ public abstract class Generator {
     private void createWallsMap() {
         for (int row = 0; row < maze.length; row++) {
             for (int col = 0; col < maze[row].length; col++) {
-                Cell currentCell = maze[row][col];
-                List<Cell> neighbors = adjacency.getOrDefault(currentCell, new ArrayList<>());
-                List<Cell> wallCells = new ArrayList<>();
-
-
-                // Проверяем все возможные смежные клетки
-                for (int i = row - 1; i <= row + 1; i++) {
-                    for (int j = col - 1; j <= col + 1; j++) {
-                        // Пропускаем текущую клетку
-                        if (i == row && j == col) continue;
-
-                        //Проверяем что это клетка угловая - не нужна
-                        if(Math.abs(row - i) == Math.abs(col - j)) continue;
-
-                        // Проверяем, находится ли клетка в пределах лабиринта
-                        if (i >= 0 && i < maze.length && j >= 0 && j < maze[row].length) {
-                            Cell neighborCell = maze[i][j];
-                            if (!neighbors.contains(neighborCell)) {
-                                wallCells.add(neighborCell);
-                            }
-                        }
-                    }
-                }
+                var currentCell = maze[row][col];
+                List<Cell> neighbors = adjacency.get(currentCell);
+                List<Cell> wallCells = getAllNeighbors(currentCell).stream()
+                    .filter(neighborCell -> !neighbors.contains(neighborCell))
+                    .collect(Collectors.toCollection(ArrayList::new));
                 walls.put(currentCell, wallCells);
             }
         }
     }
-    public abstract Maze generate(final GenerateParameters params);
+
+    public abstract Maze generate(GenerateParameters params);
 }

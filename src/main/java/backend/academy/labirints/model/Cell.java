@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+
+@SuppressWarnings({"MagicNumber"})
 @Setter
 @Getter
 @NoArgsConstructor
@@ -19,12 +21,26 @@ public class Cell {
     private CellType type;
     private boolean isVisited;
 
-    public int y(){
+    public int y() {
         return coordinates.y;
     }
 
-    public int x(){
+    public int x() {
         return coordinates.x;
+    }
+
+    @Getter()
+    public enum CellType {
+        GOOD(0),
+        BAD(4),
+        NOTHING(2);
+
+        private final int surfaceFactor;
+
+        CellType(int surfaceFactor) {
+            this.surfaceFactor = surfaceFactor;
+        }
+
     }
 
     public record Coordinates(int x, int y) {
@@ -46,19 +62,6 @@ public class Cell {
             } else {
                 return 4; // снизу
             }
-        }
-
-    }
-
-    @Getter()
-    public enum CellType{
-        GOOD(0),
-        BAD(4),
-        NOTHING(2);
-
-        private final int surfaceFactor;
-        CellType(int surfaceFactor) {
-            this.surfaceFactor = surfaceFactor;
         }
 
     }

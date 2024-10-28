@@ -4,9 +4,8 @@ import backend.academy.labirints.model.Cell;
 import backend.academy.labirints.model.Maze;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-public class BellmanFord  extends Solver {
+public class BellmanFord extends Solver {
     @Override
     public List<Cell> findShortestPath(final Maze maze) {
         var cells = maze.maze();
@@ -29,8 +28,7 @@ public class BellmanFord  extends Solver {
                 for (Cell v : adjacency.get(u)) {
                     int uIndex = getIndex(u, cells.length);
                     int vIndex = getIndex(v, cells.length);
-                    if (dist[uIndex] != Integer.MAX_VALUE && dist[uIndex] + u.type().surfaceFactor() <
-                        dist[vIndex]) { // Стоимость ребра = GOOD, BAD, NOTHING
+                    if (dist[uIndex] != Integer.MAX_VALUE && dist[uIndex] + u.type().surfaceFactor() < dist[vIndex]) {
                         dist[vIndex] = dist[uIndex] + u.type().surfaceFactor();
                         prev[vIndex] = u;
                     }

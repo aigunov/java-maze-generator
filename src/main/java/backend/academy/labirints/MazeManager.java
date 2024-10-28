@@ -7,10 +7,10 @@ import backend.academy.labirints.logic.PrimGenerator;
 import backend.academy.labirints.logic.RecursiveBacktrackGenerator;
 
 public class MazeManager {
-    public void Labyrinth(){
+    public void labyrinth() {
         var params = UserCommunicator.communicate();
         var render = ConsoleRender.getInstance(params.height(), params.width());
-        var generator = switch (params.generateType()){
+        var generator = switch (params.generateType()) {
             case PRIM -> new PrimGenerator(params.width(), params.height());
             case RECURSIVEBACKTRACK -> new RecursiveBacktrackGenerator(params.width(), params.height());
         };
@@ -22,10 +22,5 @@ public class MazeManager {
         render.renderLabyrinth(maze).draw();
         maze.path(solver.findShortestPath(maze));
         render.renderPath(maze).draw();
-    }
-
-    public static void main(String[] args) {
-        var manager = new MazeManager();
-        manager.Labyrinth();
     }
 }

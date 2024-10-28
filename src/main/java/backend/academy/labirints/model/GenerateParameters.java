@@ -12,8 +12,10 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder(toBuilder = true)
 public class GenerateParameters {
-    private int width, height;
-    private Cell.Coordinates start, finish;
+    private int width;
+    private int height;
+    private Cell.Coordinates start;
+    private Cell.Coordinates finish;
     private GenerateType generateType;
     private SolverType solverType;
 

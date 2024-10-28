@@ -5,20 +5,24 @@ import backend.academy.labirints.model.GenerateParameters;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+@SuppressWarnings({"RegexpSinglelineJava", "MagicNumber", "CatchParameterName", "MultipleStringLiterals",
+    "IllegalIdentifierName"})
 public class UserCommunicator {
-    private static final Scanner sc = new Scanner(System.in);
-    private static final GenerateParameters params = new GenerateParameters();
-    private UserCommunicator() {}
+    private static final Scanner SC = new Scanner(System.in);
+    private static final GenerateParameters PARAMETERS = new GenerateParameters();
+
+    private UserCommunicator() {
+    }
 
     public static GenerateParameters communicate() {
         while (true) {
             System.out.println("Введите пожалуйста ширину и длину вашего лабиринта в перечисленном порядке: ");
             try {
-                var width = sc.nextInt();
-                var height = sc.nextInt();
+                var width = SC.nextInt();
+                var height = SC.nextInt();
                 if (width >= 3 && height >= 3) {
                     System.out.println("Спасибо за введенные данные.");
-                    params.width(width).height(height);
+                    PARAMETERS.width(width).height(height);
                     break;
                 } else {
                     System.out.println("Введенные данные - невалидны");
@@ -28,12 +32,12 @@ public class UserCommunicator {
             }
         }
 
-        while (params.generateType() == null) {
+        while (PARAMETERS.generateType() == null) {
             System.out.println("Выберите пожалуйста номер, чтобы определить каким алгоритмом сгенерировать лабиринт:");
             System.out.println("№1. Алгоритм Прима.");
             System.out.println("№2. Алгоритм Обратного рекурсивного отслеживания.");
-            params.generateType(
-                switch (sc.nextInt()) {
+            PARAMETERS.generateType(
+                switch (SC.nextInt()) {
                     case 1 -> GenerateParameters.GenerateType.PRIM;
                     case 2 -> GenerateParameters.GenerateType.RECURSIVEBACKTRACK;
                     default -> {
@@ -44,12 +48,12 @@ public class UserCommunicator {
             );
         }
 
-        while (params.solverType() == null) {
+        while (PARAMETERS.solverType() == null) {
             System.out.println("Выберите пожалуйста номер, чтобы определить каким алгоритмом проложить путь:");
             System.out.println("№1. Алгоритм Дейкстра");
             System.out.println("№2. Алгоритм Беллмана-Форда.");
-            params.solverType(
-                switch (sc.nextInt()) {
+            PARAMETERS.solverType(
+                switch (SC.nextInt()) {
                     case 1 -> GenerateParameters.SolverType.DEIKSTRA;
                     case 2 -> GenerateParameters.SolverType.FORDBELLMAN;
                     default -> {
@@ -63,34 +67,34 @@ public class UserCommunicator {
         while (true) {
             System.out.println("Теперь введите координаты для старта:");
             System.out.print("Старт, номер столба: ");
-            int start_column = sc.nextInt();
+            int startColumn = SC.nextInt();
             System.out.print("\nСтарт, номер ряда: ");
-            int start_row = sc.nextInt();
-            if (checkValidationCoordinates(start_column, start_row)) {
-                params.start(new Cell.Coordinates(--start_column, --start_row));
+            int startRow = SC.nextInt();
+            if (checkValidationCoordinates(startColumn, startRow)) {
+                PARAMETERS.start(new Cell.Coordinates(--startColumn, --startRow));
                 break;
             }
         }
-        while(true){
+        while (true) {
             System.out.println("Теперь введите координаты для финиша:");
             System.out.print("Финиш, номер столба: ");
-            var finish_column = sc.nextInt();
+            var finishColumn = SC.nextInt();
             System.out.print("\nФиниш, номер ряда: ");
-            var finish_row = sc.nextInt();
-            if (checkValidationCoordinates(finish_column, finish_row)) {
-                params.finish(new Cell.Coordinates(--finish_column, --finish_row));
+            var finishRow = SC.nextInt();
+            if (checkValidationCoordinates(finishColumn, finishRow)) {
+                PARAMETERS.finish(new Cell.Coordinates(--finishColumn, --finishRow));
                 break;
             }
         }
-        return params;
+        return PARAMETERS;
     }
 
     private static boolean checkValidationCoordinates(int column, int row) {
-        if (column > 0 && column <= params.width() &&
-            row > 0 && row <= params.height()) {
-            System.out.printf("Введенные данные валидны. Точка: (%d;%d)%n", column,row);
+        if (column > 0 && column <= PARAMETERS.width()
+            && row > 0 && row <= PARAMETERS.height()) {
+            System.out.printf("Введенные данные валидны. Точка: (%d;%d)%n", column, row);
             return true;
-        }else {
+        } else {
             System.out.println("Введенные данные невалидны.");
         }
         return false;
