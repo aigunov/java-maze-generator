@@ -2,9 +2,10 @@ package backend.academy.labirints.logic;
 
 import backend.academy.labirints.model.Cell;
 import backend.academy.labirints.model.Maze;
+import lombok.Getter;
 import java.util.Arrays;
 
-
+@Getter
 public class ConsoleRender implements Render{
     private static Render instance;
 

@@ -11,7 +11,7 @@ public class BellmanFord  extends Solver {
     public List<Cell> findShortestPath(final Maze maze) {
         var cells = maze.maze();
         var adjacency = maze.adjacentCells();
-        var start = maze.finish();
+        var start = maze.start();
         var finish = maze.finish();
         int countVertex = cells.length * cells[0].length;
         int[] dist = new int[countVertex];
