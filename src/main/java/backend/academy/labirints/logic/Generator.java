@@ -64,9 +64,14 @@ public abstract class Generator {
         }
     }
 
+    /**
+     * Метода добавляющий связь(проход) между клетками соседями cell, neighbour
+     */
     protected void removeWall(final Cell cell, final Cell neighbour) {
-        adjacency.computeIfAbsent(cell, k -> new ArrayList<>()).add(neighbour);
-        adjacency.computeIfAbsent(neighbour, k -> new ArrayList<>()).add(cell);
+        adjacency.computeIfAbsent(cell, _ -> new ArrayList<>()).add(neighbour);
+        adjacency.computeIfAbsent(neighbour, _ -> new ArrayList<>()).add(cell);
+        walls.getOrDefault(cell, new ArrayList<>()).add(neighbour);
+        walls.getOrDefault(neighbour, new ArrayList<>()).remove(cell);
     }
 
     protected List<Cell> getUnvisitedNeighbors(final Cell cell) {
@@ -88,12 +93,8 @@ public abstract class Generator {
             List<Cell> wallCells = walls.get(cell);
 
             if (!wallCells.isEmpty()) {
-                int wallIndex = random.nextInt(wallCells.size());
-                Cell wallCell = wallCells.get(wallIndex);
-                adjacency.computeIfAbsent(cell, k -> new ArrayList<>()).add(wallCell);
-                adjacency.computeIfAbsent(wallCell, k -> new ArrayList<>()).add(cell);
-                walls.get(cell).remove(wallCell);
-                walls.get(wallCell).remove(cell);
+                var wallIndex = random.nextInt(wallCells.size());
+                removeWall(cell, wallCells.get(wallIndex));
             }
         }
     }
