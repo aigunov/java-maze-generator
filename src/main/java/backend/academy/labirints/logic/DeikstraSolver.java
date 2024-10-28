@@ -53,7 +53,7 @@ public class DeikstraSolver extends Solver {
                 }
             }
         }
-        return null;
+        throw new IllegalArgumentException("Невозможно найти путь, сгенерированный лабиринт - невалиден");
     }
 
     private List<Cell> reconstructPath(Map<Cell, Cell> predecessors, Cell finish) {

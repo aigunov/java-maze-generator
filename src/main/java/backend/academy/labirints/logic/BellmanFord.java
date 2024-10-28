@@ -48,16 +48,16 @@ public class BellmanFord extends Solver {
     }
 
     // Метод для восстановления пути
-    private List<Cell> reconstructPath(Cell[] prev, Cell end, int n) {
+    private List<Cell> reconstructPath(final Cell[] prev, final Cell end, final int arrLen) {
         List<Cell> path = new ArrayList<>();
-        int endIndex = getIndex(end, n);
+        int endIndex = getIndex(end, arrLen);
         if (prev[endIndex] == null) {
-            return path; // Путь не найден
+            throw new IllegalArgumentException("Невозможно найти путь, сгенерированный лабиринт - невалиден");
         }
         Cell current = end;
         while (current != null) {
             path.add(current);
-            current = prev[getIndex(current, n)];
+            current = prev[getIndex(current, arrLen)];
         }
         return path;
     }
