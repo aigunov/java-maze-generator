@@ -9,7 +9,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 
-@SuppressWarnings({"MagicNumber"})
 @Setter
 @Getter
 @NoArgsConstructor
@@ -54,15 +53,15 @@ public class Cell {
             return y * 2 + 1;
         }
 
-        public int getRelativePosition(final Coordinates otherCoordinates) {
+        public Coordinates getRelativePosition(final Coordinates otherCoordinates) {
             if (otherCoordinates.x == x && otherCoordinates.y == y + 1) {
-                return 3; // снизу
+                return new Coordinates(calculateGridX(), calculateGridY() + 1);
             } else if (otherCoordinates.x == x && otherCoordinates.y == y - 1) {
-                return 1; // вверху
+                return new Coordinates(calculateGridX(), calculateGridY() - 1);
             } else if (otherCoordinates.x == x + 1 && otherCoordinates.y == y) {
-                return 2; // справа
+                return new Coordinates(calculateGridX() + 1, calculateGridY());
             } else {
-                return 4; // снизу
+                return new Coordinates(calculateGridX() - 1, calculateGridY());
             }
         }
 

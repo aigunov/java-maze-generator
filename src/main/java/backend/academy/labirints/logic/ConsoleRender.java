@@ -84,14 +84,8 @@ public class ConsoleRender implements Render {
             if (!grid[gridRow][gridCol].equals(START) && !grid[gridRow][gridCol].equals(FINISH)) {
                 grid[gridRow][gridCol] = PATH;
             }
-            switch (cell.coordinates().getRelativePosition(nextCell.coordinates())) {
-                case 1 -> grid[gridRow - 1][gridCol] = PATH;
-                case 2 -> grid[gridRow][gridCol + 1] = PATH;
-                case 3 -> grid[gridRow + 1][gridCol] = PATH;
-                case 4 -> grid[gridRow][gridCol - 1] = PATH;
-                default ->
-                    throw new IllegalArgumentException("Если выпала эта ошибка значит метод определения неправильный");
-            }
+            var coordinates = cell.coordinates().getRelativePosition(nextCell.coordinates());
+            grid[coordinates.y()][coordinates.x()] = PATH;
         }
         return instance;
     }
