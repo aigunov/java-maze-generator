@@ -6,8 +6,8 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Arrays;
 import lombok.Getter;
 
-@SuppressWarnings({"RegexpSinglelineJava", "MagicNumber"})
-@SuppressFBWarnings({"CLI_CONSTANT_LIST_INDEX", "LSC_LITERAL_STRING_COMPARISON"})
+@SuppressWarnings({"RegexpSinglelineJava"})
+@SuppressFBWarnings({"CLI_CONSTANT_LIST_INDEX"})
 @Getter
 public class ConsoleRender implements Render {
     private final static String PASSAGE = "⬜️";
@@ -81,7 +81,7 @@ public class ConsoleRender implements Render {
             var nextCell = maze.path().get(i + 1);
             var gridRow = cell.coordinates().calculateGridY();
             var gridCol = cell.coordinates().calculateGridX();
-            if (!grid[gridRow][gridCol].equals(START) && !grid[gridRow][gridCol].equals(FINISH)) {
+            if (!START.equals(grid[gridRow][gridCol]) && !FINISH.equals(grid[gridRow][gridCol])) {
                 grid[gridRow][gridCol] = PATH;
             }
             var coordinates = cell.coordinates().getRelativePosition(nextCell.coordinates());

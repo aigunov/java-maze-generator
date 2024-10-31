@@ -30,11 +30,9 @@ public class DeikstraSolver extends Solver {
         }
         distances.put(start, 0);
 
-        //TODO задать компаратор на surfaceFactor CellType
         PriorityQueue<Cell> queue = new PriorityQueue<>(Comparator.comparingInt(distances::get));
         queue.offer(start);
 
-        //TODO Заменить на LinkedList
         Map<Cell, Cell> predecessors = new HashMap<>();
 
         while (!queue.isEmpty()) {

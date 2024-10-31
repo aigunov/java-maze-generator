@@ -3,11 +3,9 @@ package backend.academy.labirints.logic;
 import backend.academy.labirints.model.Cell;
 import backend.academy.labirints.model.GenerateParameters;
 import backend.academy.labirints.model.Maze;
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
-@SuppressFBWarnings({"PREDICTABLE_RANDOM"})
 public class RecursiveBacktrackGenerator extends Generator {
     private final Deque<Cell> tracker;
 

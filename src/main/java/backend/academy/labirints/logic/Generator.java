@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-@SuppressFBWarnings({"CLI_CONSTANT_LIST_INDEX", "PREDICTABLE_RANDOM"})
+@SuppressFBWarnings({"CLI_CONSTANT_LIST_INDEX"})
 @SuppressWarnings({"MagicNumber"})
 public abstract class Generator {
     protected final Random random = new SecureRandom();
@@ -78,7 +78,7 @@ public abstract class Generator {
     }
 
     /**
-     * метод высчитывает сколько клеток надо пометить
+     * Метод высчитывает сколько клеток надо пометить
      * @param rows - количество рядов в лабиринте
      * @param cols - количество столбцов в лабиринте
      * @return число, обозначающее сколько клеток надо пометить случайным образом
