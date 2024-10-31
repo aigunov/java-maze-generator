@@ -6,7 +6,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-@SuppressWarnings({"RegexpSinglelineJava", "MagicNumber", "CatchParameterName", "MultipleStringLiterals",
+@SuppressWarnings({"RegexpSinglelineJava", "MagicNumber",  "MultipleStringLiterals",
     "IllegalIdentifierName"})
 @SuppressFBWarnings({"DM_DEFAULT_ENCODING"})
 public class UserCommunicator {
@@ -29,7 +29,7 @@ public class UserCommunicator {
                 } else {
                     System.out.println("Введенные данные - невалидны");
                 }
-            } catch (InputMismatchException _) {
+            } catch (InputMismatchException e) {
                 System.out.println("Введите пожалуйста число, а не строку.");
             }
         }
