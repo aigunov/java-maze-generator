@@ -1,13 +1,13 @@
 package backend.academy.labirints.logic;
 
 import backend.academy.labirints.GeneratorTestMaze;
+import java.util.Arrays;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import java.util.Arrays;
 
 class ConsoleRenderTest {
     @Test
-    void testRenderLabyrinth() {
+    void testRenderLabyrinthCorrect() {
         var render = ConsoleRender.getInstance(3, 3);
         var expected = renderGrid();
         var actual = ((ConsoleRender)render.renderLabyrinth(GeneratorTestMaze.generateTestMaze())).grid();
@@ -18,7 +18,7 @@ class ConsoleRenderTest {
     }
 
     @Test
-    void testRenderPath() {
+    void testRenderPathCorrect() {
         var render = ConsoleRender.getInstance(3, 3);
         var maze = GeneratorTestMaze.generateTestMaze();
         var expected = renderPathInGrid();

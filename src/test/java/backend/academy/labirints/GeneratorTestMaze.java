@@ -16,10 +16,9 @@ public class GeneratorTestMaze {
     private static List<Cell> path;
 
     public static Maze generateTestMaze(){
-        int id = 1;
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                maze[i][j] = new Cell(id++, new Cell.Coordinates(j, i), Cell.CellType.NOTHING, false);
+                maze[i][j] = new Cell(new Cell.Coordinates(j, i), Cell.CellType.NOTHING, false);
                 adjacentCells.put(maze[i][j], new ArrayList<Cell>());
                 walls.put(maze[i][j], new LinkedList<Cell>());
             }

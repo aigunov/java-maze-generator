@@ -20,16 +20,20 @@ public abstract class Generator {
     protected final Map<Cell, List<Cell>> walls = new HashMap<>();
     protected int width;
     protected int height;
+    private final int[][] directions = {
+        {-1, 0},
+        {1, 0},
+        {0, -1},
+        {0, 1}
+    };
 
     protected Generator(final int width, final int height) {
         this.width = width;
         this.height = height;
         this.maze = new Cell[height][width];
-        int id = 1;
         for (int i = 0; i < maze.length; i++) {
             for (int j = 0; j < maze[0].length; j++) {
                 var cell = Cell.builder()
-                    .id(id++)
                     .coordinates(new Cell.Coordinates(j, i))
                     .type(Cell.CellType.NOTHING)
                     .isVisited(false)
@@ -42,13 +46,6 @@ public abstract class Generator {
 
     protected List<Cell> getAllNeighbors(final Cell cell) {
         var neighbors = new ArrayList<Cell>();
-
-        int[][] directions = {
-            {-1, 0},
-            {1, 0},
-            {0, -1},
-            {0, 1}
-        };
 
         for (var direction : directions) {
             var newRow = cell.y() + direction[1];

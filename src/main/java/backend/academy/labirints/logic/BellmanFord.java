@@ -24,6 +24,7 @@ public class BellmanFord extends Solver {
         dist[getIndex(start, cells.length)] = 0;
 
         for (int k = 0; k < countVertex - 1; k++) {
+            boolean updated = false;  // Флаг, отслеживающий изменения
             for (var entry : adjacency.entrySet()) {
                 Cell u = entry.getKey();
                 int uIndex = getIndex(u, cells.length);
@@ -33,9 +34,14 @@ public class BellmanFord extends Solver {
                         if (dist[uIndex] + u.type().surfaceFactor() < dist[vIndex]) {
                             dist[vIndex] = dist[uIndex] + u.type().surfaceFactor();
                             prev[vIndex] = u;
+                            updated = true;  // Обновление произошло
                         }
                     }
                 }
+            }
+            // Если не было изменений, алгоритм завершает работу
+            if (!updated) {
+                break;
             }
         }
         // Восстановление пути

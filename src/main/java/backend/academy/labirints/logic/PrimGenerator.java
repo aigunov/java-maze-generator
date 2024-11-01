@@ -19,8 +19,7 @@ public class PrimGenerator extends Generator {
         var current = maze[random.nextInt(height)][random.nextInt(width)];
         current.isVisited(true);
 
-        var neighsToFrontier = getUnvisitedNeighbors(current);
-        frontier.addAll(neighsToFrontier);
+        frontier.addAll(getUnvisitedNeighbors(current));
         Collections.shuffle(frontier);
 
         while (!frontier.isEmpty()) {
@@ -35,7 +34,7 @@ public class PrimGenerator extends Generator {
                 removeWall(current, neighs.getFirst());
             }
 
-            neighsToFrontier = getUnvisitedNeighbors(current);
+            var neighsToFrontier = getUnvisitedNeighbors(current);
             frontier.addAll(neighsToFrontier);
             Collections.shuffle(frontier);
 

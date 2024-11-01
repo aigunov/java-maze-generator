@@ -24,7 +24,7 @@ public class RecursiveBacktrackGenerator extends Generator {
             var neighbors = getUnvisitedNeighbors(cell);
 
             if (!neighbors.isEmpty()) {
-                var neighbour = neighbors.get((int) (Math.random() * neighbors.size()));
+                var neighbour = neighbors.get(random.nextInt(neighbors.size()));
                 removeWall(cell, neighbour);
                 neighbour.isVisited(true);
                 tracker.push(neighbour);

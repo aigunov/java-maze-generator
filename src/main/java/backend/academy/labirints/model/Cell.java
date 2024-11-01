@@ -2,7 +2,6 @@ package backend.academy.labirints.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,10 +13,8 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString(of = {"id", "type"})
-@EqualsAndHashCode(of = {"id"})
+@ToString(of = {"type"})
 public class Cell {
-    private int id;
     private Coordinates coordinates;
     private CellType type;
     private boolean isVisited;
