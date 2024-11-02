@@ -50,6 +50,8 @@ public class Cell {
     public record Coordinates(int x, int y) {
 
         /**
+         * Вычисляет x координату в grid
+         *
          * @return x в grid
          */
         public int calculateGridX() {
@@ -57,6 +59,8 @@ public class Cell {
         }
 
         /**
+         * Вычисляет y координату в grid
+         *
          * @return y в grid
          */
         public int calculateGridY() {
