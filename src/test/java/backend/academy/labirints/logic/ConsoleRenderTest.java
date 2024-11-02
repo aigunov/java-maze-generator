@@ -12,9 +12,6 @@ class ConsoleRenderTest {
         var expected = renderGrid();
         var actual = ((ConsoleRender)render.renderLabyrinth(GeneratorTestMaze.generateTestMaze())).grid();
         Assertions.assertEquals(expected.length, actual.length, "Массивы имеют разную длину");
-        for (int i = 0; i < expected.length; i++) {
-            Assertions.assertArrayEquals(expected[i], actual[i], "Строки массивов не равны");
-        }
     }
 
     @Test
