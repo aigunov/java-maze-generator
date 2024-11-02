@@ -41,15 +41,34 @@ public class Cell {
 
     }
 
+    /**
+     * Record отвечающий за хранение координат клетки в лабиринте и также операции связанные с координатами
+     *
+     * @param x - столбец
+     * @param y - ряд
+     */
     public record Coordinates(int x, int y) {
+
+        /**
+         * @return x в grid
+         */
         public int calculateGridX() {
             return x * 2 + 1;
         }
 
+        /**
+         * @return y в grid
+         */
         public int calculateGridY() {
             return y * 2 + 1;
         }
 
+        /**
+         * Определяет относительное положение следующей клетки от this,
+         * для того чтобы определить координаты промежуточной клетки между двумя клетками PATH
+         * @param otherCoordinates - следующая от this клетка в пути
+         * @return координаты промежуточной клетки в grid
+         */
         public Coordinates getRelativePosition(final Coordinates otherCoordinates) {
             if (otherCoordinates.x == x && otherCoordinates.y == y + 1) {
                 return new Coordinates(calculateGridX(), calculateGridY() + 1);

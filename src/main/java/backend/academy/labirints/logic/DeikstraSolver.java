@@ -15,6 +15,12 @@ import java.util.PriorityQueue;
 public class DeikstraSolver extends Solver {
     private static final int INF = Integer.MAX_VALUE;
 
+    /**
+     * Метод прокладывающий путь по алгоритму Дейкстра
+     *
+     * @param maze - объект Maze со всей необходимой информацией для определения пути
+     * @return - список клеток определяющих сам путь {@link #findShortestPath(Maze)}
+     */
     @Override
     public List<Cell> findShortestPath(final Maze maze) {
         var cells = maze.maze();
@@ -54,6 +60,13 @@ public class DeikstraSolver extends Solver {
         throw new IllegalArgumentException("Невозможно найти путь, сгенерированный лабиринт - невалиден");
     }
 
+    /**
+     * Метод конвертируют результат работы алгоритма Дейкстра в список клеток(путь)
+     *
+     * @param predecessors маппа со всеми клетками
+     * @param finish       - конечная клетка к которой прокладывался путь
+     * @return - список клеток (путь)
+     */
     private List<Cell> reconstructPath(Map<Cell, Cell> predecessors, Cell finish) {
         List<Cell> path = new ArrayList<>();
         Cell current = finish;

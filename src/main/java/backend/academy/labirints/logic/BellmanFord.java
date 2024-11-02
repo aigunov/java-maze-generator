@@ -6,6 +6,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BellmanFord extends Solver {
+
+    /**
+     * Метод прокладывающий путь по алгоритму Беллмана-Форда
+     *
+     * @param maze - объект Maze со всей необходимой информацией для определения пути
+     * @return - список клеток определяющих сам путь {@link #findShortestPath(Maze)}
+     */
     @Override
     public List<Cell> findShortestPath(final Maze maze) {
         var cells = maze.maze();
@@ -48,12 +55,21 @@ public class BellmanFord extends Solver {
         return reconstructPath(prev, finish, cells.length);
     }
 
-    // Методы для индексации клеток в массиве
+    /**
+     * Вычисляет индекс клетки из лабиринта в списке distance
+     */
     private int getIndex(Cell cell, int n) {
         return cell.x() * n + cell.y();
     }
 
-    // Метод для восстановления пути
+    /**
+     * Метод конвертируют результат работы алгоритма Беллмана-Форда в список клеток(путь)
+     *
+     * @param end    - конечная клетка к которой прокладывался путь
+     * @param arrLen - длина списка distance
+     * @param prev   - список составленным алгоритмом
+     * @return - список клеток (путь)
+     */
     private List<Cell> reconstructPath(final Cell[] prev, final Cell end, final int arrLen) {
         List<Cell> path = new ArrayList<>();
         int endIndex = getIndex(end, arrLen);

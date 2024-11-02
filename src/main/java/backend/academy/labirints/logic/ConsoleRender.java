@@ -6,6 +6,9 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Arrays;
 import lombok.Getter;
 
+/**
+ * Класс создающий графическое представления лабиринта и выводящий его в консоль
+ */
 @SuppressWarnings({"RegexpSinglelineJava"})
 @SuppressFBWarnings({"CLI_CONSTANT_LIST_INDEX"})
 @Getter
@@ -20,6 +23,11 @@ public class ConsoleRender implements Render {
     private static Render instance;
     private final String[][] grid;
 
+    /**
+     * Изначальная инициализация лабиринта(grid)
+     * верхняя, нижняя, правая, левая - стенки WALL
+     * вся внутрення часть - PASSAGE
+     */
     public ConsoleRender(int height, int width) {
         this.grid = new String[height * 2 + 1][width * 2 + 1];
         Arrays.stream(grid).forEach(row -> Arrays.fill(row, WALL));
@@ -41,6 +49,13 @@ public class ConsoleRender implements Render {
         return instance;
     }
 
+    /**
+     * Метод создает лабиринт в grid[height*2+1][width*2+1]
+     * Помечает клетки grid GOOD, BAD, WALL, START, FINISH в зависимости от значений в maze
+     *
+     * @param maze - информация о лабиринте
+     * @return - instance ConsoleRender чтобы было удобнее работать и вызывать последовательность методов
+     */
     @Override
     public Render renderLabyrinth(final Maze maze) {
         var labyrinth = maze.maze();
@@ -73,6 +88,13 @@ public class ConsoleRender implements Render {
         return instance;
     }
 
+    /**
+     * Уже в созданном grid через метод {@link #renderLabyrinth(Maze)}
+     * Прокладывает в нем путь помечая необходимые клетки символом PATH
+     *
+     * @param maze - информация о лабиринте
+     * @return - instance ConsoleRender чтобы было удобнее работать и вызывать последовательность методов
+     */
     @Override
     public Render renderPath(final Maze maze) {
         System.out.println("ПУТЬ: ");
@@ -90,6 +112,9 @@ public class ConsoleRender implements Render {
         return instance;
     }
 
+    /**
+     * Выводит grid в консоль
+     */
     @Override
     public void draw() {
         for (String[] strings : grid) {

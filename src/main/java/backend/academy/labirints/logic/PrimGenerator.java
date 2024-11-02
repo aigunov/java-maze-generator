@@ -14,6 +14,15 @@ public class PrimGenerator extends Generator {
         super(width, height);
     }
 
+    /**
+     * Метод содержащий в себе алгоритм Прима для генерации лабиринта
+     * Случайным образом и соседей всех уже посещенных клеток выбирается клетка
+     * Из нее прокладывается путь к одной из уже посещенных и сама она становится посещенной
+     * Список посещенных становится больше, а к соседям(frontier) добавляются соседи новой клетки
+     *
+     * @param params - объект класса GenerateParameters содержащий все необходимые для генерации поля
+     * @return - объект класса Maze содержащий всю информацию о сгенерированном лабиринте
+     */
     @Override
     public Maze generate(final GenerateParameters params) {
         var current = maze[random.nextInt(height)][random.nextInt(width)];

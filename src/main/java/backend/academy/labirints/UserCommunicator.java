@@ -10,7 +10,7 @@ import java.util.Scanner;
 @SuppressWarnings({"MagicNumber", "MultipleStringLiterals",
     "IllegalIdentifierName"})
 @SuppressFBWarnings({"DM_DEFAULT_ENCODING"})
-public class UserCommunicator {
+public final class UserCommunicator {
     private static final Scanner SC = new Scanner(System.in);
     private static final GenerateParameters PARAMETERS = new GenerateParameters();
     private static final PrintStream OUT = System.out;

@@ -11,6 +11,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+/**
+ * Класс Generator - базовый класс генерации лабиринта содержащий
+ * в себе одинаковую для двух алгоритмов генерации логику и поля
+ * необходимые для генерации лабиринта
+ */
 @SuppressFBWarnings({"CLI_CONSTANT_LIST_INDEX"})
 @SuppressWarnings({"MagicNumber"})
 public abstract class Generator {
@@ -27,6 +32,9 @@ public abstract class Generator {
         {0, 1}
     };
 
+    /**
+     * Конструктор инициализирующий все клетки лабиринта
+     */
     protected Generator(final int width, final int height) {
         this.width = width;
         this.height = height;
@@ -44,6 +52,12 @@ public abstract class Generator {
         createWallsMap();
     }
 
+    /**
+     * Метод находит всех соседей для клетки (стенки не считаются)
+     *
+     * @param cell - клетка список чьих соседей надо вернуть
+     * @return список соседей вверху-справа-снизу-слева если там не границы лабиринта
+     */
     protected List<Cell> getAllNeighbors(final Cell cell) {
         var neighbors = new ArrayList<Cell>();
 
@@ -59,12 +73,22 @@ public abstract class Generator {
         return neighbors;
     }
 
+    /**
+     * Метод находит список не посещенных соседей клеток используя метод {@link #getAllNeighbors(Cell)}
+     * @param cell - клетка список чьих не посещенных соседей надо вернуть
+     * @return список не посещенных соседей
+     */
     protected List<Cell> getUnvisitedNeighbors(final Cell cell) {
         return getAllNeighbors(cell).stream()
             .filter(c -> !c.isVisited())
             .toList();
     }
 
+    /**
+     * Метод помечающий рандомным образом клетки лабиринта
+     * одним из двух типов поверхности: 1.GOOD 2.BAD
+     * по умолчанию во всех клетках стоит NOTHING
+     */
     public void generateRandomCells() {
         var countOfRandomCells = calculateMarkedCells(maze.length, maze[0].length);
         for (int i = 0; i < countOfRandomCells; i++) {
@@ -102,7 +126,12 @@ public abstract class Generator {
         walls.getOrDefault(neighbour, new ArrayList<>()).remove(cell);
     }
 
-    //TODO поменять генерацию доп-путей: отделять стенки от граничных стенок
+    /**
+     * Надо создать лабиринт в котором типы поверхностей
+     * могут влиять на выбранный алгоритмом путь
+     * поскольку алгоритмы Прима и Обратного вызова создают идеальный лабиринт
+     * необходимо создавать доп-пути через случайное удаление клеток
+     */
     protected void createAdditionalPaths() {
         int numForAdditionPathsFormula = 4;
         int numAdditionalPaths = random.nextInt(maze.length * maze[0].length / numForAdditionPathsFormula) + 1;
@@ -120,6 +149,13 @@ public abstract class Generator {
         }
     }
 
+    /**
+     * Метод создает список несмежных вершин
+     * При инициализации лабиринта в конструкторе для каждой клетки
+     * появиться список несмежных клеток (между которым с ним стоит стенка)
+     * после в процессе генерации в методе {@link #removeWall(Cell, Cell)}
+     * будет удаляться стенка из списка
+     */
     private void createWallsMap() {
         for (int row = 0; row < maze.length; row++) {
             for (int col = 0; col < maze[row].length; col++) {

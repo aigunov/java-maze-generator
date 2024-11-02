@@ -6,6 +6,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * Класс содержащий в себе все параметры и
+ * настройки генерации лабиринта заданные пользователем
+ * после генерации лабиринта перестает использоваться
+ */
 @Getter
 @Setter
 @NoArgsConstructor
